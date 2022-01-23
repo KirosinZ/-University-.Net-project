@@ -1,0 +1,86 @@
+﻿@model BookBrowserViewModel
+
+@{
+    ViewBag.Title = "Список доступных книг";
+}
+
+@*<h3>Доступные книги</h3>
+    <table class="table">
+        <tr>
+            <th>Название</th>
+            <th>Жанр/Форма</th>
+            <th>Тип лит-ры</th>
+            <th>Язык</th>
+            <th colspan="2">Цена</th>
+        </tr>
+        @foreach (var bc in Model.Books)
+        {
+            <tr>
+                <td>
+                    @bc.BookInfo.Title
+                </td>
+                <td>
+                    @bc.BookInfo.Genre.Name
+                </td>
+                <td>
+                    @bc.BookInfo.Genre.Type.Name
+                </td>
+                <td>
+                    @bc.Copy.Language.Name
+                </td>
+                @if (Model.ActiveSubs.Any(s => s.TypeId == bc.BookInfo.Genre.TypeId))
+                {
+                    <td>
+                        @bc.BookInfo.Price₽/день
+                    </td>
+                    <td>
+                        <a asp-action="Take" asp-route-bookId="@bc.Copy.Id" asp-route-readerId="@Model.ReaderId">Взять</a>
+                    </td>
+                }
+                else
+                {
+                    <td colspan="2">
+                        @bc.BookInfo.Price₽/день
+                    </td>
+                }
+            </tr>
+        }
+    </table>*@
+
+@foreach (var t in Model.Books)
+{
+    <h3>@(t.First().BookInfo.Genre.Type.Name) литература</h3>
+    <table class="table">
+        <tr>
+            <th>Название</th>
+            <th>Жанр/Форма</th>
+            <th>Язык</th>
+            <th colspan="2">Цена</th>
+        </tr>
+        @foreach (var bc in t)
+        {
+            <tr>
+                <td>
+                    @bc.BookInfo.Title
+                </td>
+                <td>
+                    @bc.BookInfo.Genre.Name
+                </td>
+                <td>
+                    @bc.Copy.Language.Name
+                </td>
+                <td>
+                    @bc.BookInfo.Price₽/день
+                </td>
+                <td>
+                    <a asp-action="Take" asp-route-bookId="@bc.Copy.Id" asp-route-readerId="@Model.ReaderId">Взять</a>
+                </td>
+            </tr>
+        }
+    </table>
+}
+
+
+<div>
+    <a asp-controller="Profile" asp-action="Index" asp-route-id="@Model.ReaderId" class="btn btn-outline-dark">Назад</a>
+</div>

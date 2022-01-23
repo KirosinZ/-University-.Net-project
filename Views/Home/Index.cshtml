@@ -1,0 +1,42 @@
+﻿@model IEnumerable<ReaderDto>
+@{
+    ViewBag.Title = "Главная";
+}
+<body>
+
+    @{
+        <h3 class="text-center">Читатели библиотеки</h3>
+
+        if (Model.Count() == 0)
+        {
+            <hr />
+            <h3 class="text-center">В библиотеке нет читателей</h3>
+        }
+        else
+        {
+            <table class="table">
+                <tr>
+                    <th>№Билета</th>
+                    <th>ФИО</th>
+                    <td colspan="2">Баланс</td>
+                </tr>
+                @foreach (var r in Model)
+                {
+                    <tr>
+                        <td>@r.Id</td>
+                        <td>@r.FullName</td>
+                        <td>@r.Balance₽</td>
+                        <td>
+                            <a asp-controller="Profile" asp-action="Index" asp-route-id="@r.Id">Войти...</a>
+                        </td>
+                    </tr>
+                }
+            </table>
+        }
+        <hr />
+        <div class="text-center">
+            <a asp-action="Register" class="btn btn-outline-dark">Зарегистрировать</a>
+        </div>
+    }
+
+</body>

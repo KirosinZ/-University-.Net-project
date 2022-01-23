@@ -1,0 +1,10 @@
+﻿@model ReaderDto
+
+@{
+    ViewBag.Title = "Задолженность";
+}
+
+<h3>У вас есть непогашенная задолженность в @(-Model.Balance) рублей.</h3>
+<h3>Погасите задолженность и повторите попытку</h3>
+<hr />
+<a asp-controller="Profile" asp-action="Index" asp-route-id="@Model.Id" class="btn btn-outline-dark">ОК</a>

@@ -1,0 +1,52 @@
+﻿@model SubscriptionIssueViewModel
+
+@{
+    ViewBag.Title = "Оформление абонемента";
+}
+
+<h3>Оформление абонемента — @Model.Type.Name литература</h3>
+<hr />
+
+<table style="width: 33%">
+    <tr>
+        <th>
+            Ваш баланс 
+        </th>
+        <td class="text-center">
+            @Model.Reader.Balance₽
+        </td>
+    </tr>
+    <tr>
+        <th>
+            Стоимость абонемента
+        </th>
+        <td class="text-center">
+            @Model.Type.Price₽/неделя
+        </td>
+    </tr>
+</table>
+
+<div class="row" style="margin-top: 12px">
+    <div class="col-md-12">
+        <form asp-action="Issue">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <input type="hidden" name="Reader.Id" value="@Model.Reader.Id" />
+            <input type="hidden" name="Type.Id" value="@Model.Type.Id" />
+            <input type="hidden" name="AcquisitionDate" value="@Model.AcquisitionDate" />
+
+            <div class="form-group">
+                <label asp-for="Period" class="control-label">Период</label>
+                <input type="number" name="Period" value="1" min="1" max="@(Model.Reader.Balance / Model.Type.Price)" class="form-control" style="width:33%"/>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Оформить" class="btn btn-outline-dark" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-controller="Profile" asp-action="Index" asp-route-id="@Model.Reader.Id" style="margin-top: 6px" class="btn btn-outline-dark">Назад</a>
+</div>

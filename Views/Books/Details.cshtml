@@ -1,0 +1,41 @@
+﻿@model BookDto
+
+@{
+    ViewBag.Title = Model.Title;
+}
+
+<h3>@Model.Title</h3>
+
+<table class="table" style="width: 60%">
+    <tr>
+        <th>Количество страниц</th>
+        <td>@Model.NumberOfPages</td>
+    </tr>
+    <tr>
+        <th>Тип</th>
+        <td>@Model.Genre.Type.Name литература</td>
+    </tr>
+    <tr>
+        @if (Model.Genre.TypeId == 1)
+        {
+            <th>Жанр</th>
+        }
+        else
+        {
+            <th>Форма</th>
+        }
+        <td>@Model.Genre.Name</td>
+    </tr>
+    <tr>
+        <th>Язык оригинала</th>
+        <td>@Model.OriginalLanguage.Name</td>
+    </tr>
+    <tr>
+        <th>Автор</th>
+        <td>@Model.Author.FullName</td>
+    </tr>
+</table>
+
+<div>
+    <a asp-action="Index" class="btn btn-outline-dark">Назад</a>
+</div>

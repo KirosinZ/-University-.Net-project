@@ -1,0 +1,10 @@
+﻿@model int
+
+@{
+    ViewBag.Title = "Нет доступных книг";
+}
+
+<h3>К сожалению, по вашим абонементам нет доступных книг.</h3>
+<h3>Дождитесь пополнения библиотеки или оформите другие абонементы.</h3>
+<hr />
+<a asp-controller="Profile" asp-action="Index" asp-route-id="@Model" class="btn btn-outline-dark">ОК</a>

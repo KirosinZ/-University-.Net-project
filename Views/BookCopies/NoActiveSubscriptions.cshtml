@@ -1,0 +1,10 @@
+﻿@model int
+
+@{
+    ViewBag.Title = "Нет абонементов";
+}
+
+<h3>У вас не оформлено ни одного абонемента.</h3>
+<h3>Оформите абонемент и повторите попытку.</h3>
+<hr />
+<a asp-controller="Profile" asp-action="Index" asp-route-id="@Model" class="btn btn-outline-dark">ОК</a>

@@ -1,0 +1,35 @@
+﻿@model IEnumerable<AuthorDto>
+@{
+    ViewBag.Title = "Авторы";
+}
+<body>
+
+    @{
+        <h3 class="text-center">Авторы</h3>
+        
+        if (Model.Count() == 0)
+        {
+            <hr />
+            <h3 class="text-center">Нет данных об авторах</h3>
+        }
+        else
+        {
+            <table class="table">
+                <tr>
+                    <th>Имя</th>
+                    <th>Страна</th>
+                    <th>Количество книг</th>
+                </tr>
+                @foreach(var a in Model)
+                {
+                    <tr>
+                        <td>@a.FullName</td>
+                        <td>@a.Country.Name</td>
+                        <td>@a.Books.Count()</td>
+                    </tr>
+                }
+            </table>
+        }
+    }
+
+</body>

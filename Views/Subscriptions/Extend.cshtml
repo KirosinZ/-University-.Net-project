@@ -1,0 +1,50 @@
+﻿@model SubscriptionExtendViewModel
+
+@{
+    ViewBag.Title = "Продление абонемента";
+}
+
+<h3>Продление абонемента — @Model.Subscription.Type.Name литература</h3>
+<hr />
+
+<table style="width: 33%">
+    <tr>
+        <th>
+            Ваш баланс
+        </th>
+        <td class="text-center">
+            @Model.Subscription.Owner.Balance₽
+        </td>
+    </tr>
+    <tr>
+        <th>
+            Стоимость абонемента
+        </th>
+        <td class="text-center">
+            @Model.Subscription.Type.Price₽/неделя
+        </td>
+    </tr>
+</table>
+
+<div class="row">
+    <div class="col-md-12" style="margin-top: 12px">
+        <form asp-action="Extend">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <input type="hidden" name="Subscription.Id" value="@Model.Subscription.Id" />
+
+            <div class="form-group">
+                <label asp-for="Extension" class="control-label">Период</label>
+                <input type="number" name="Extension" value="1" min="1" max="@(Model.Subscription.Owner.Balance / Model.Subscription.Type.Price)" class="form-control" style="width:33%" />
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Продлить" class="btn btn-outline-dark" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-controller="Profile" asp-action="Index" asp-route-id="@Model.Subscription.Owner.Id" style="margin-top: 6px" class="btn btn-outline-dark">Назад</a>
+</div>

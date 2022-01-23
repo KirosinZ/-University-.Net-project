@@ -1,0 +1,37 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Business.Interop\**" />
+    <Compile Remove="Business.Services\**" />
+    <Compile Remove="Business\**" />
+    <Compile Remove="Repository\**" />
+    <Content Remove="Business.Interop\**" />
+    <Content Remove="Business.Services\**" />
+    <Content Remove="Business\**" />
+    <Content Remove="Repository\**" />
+    <EmbeddedResource Remove="Business.Interop\**" />
+    <EmbeddedResource Remove="Business.Services\**" />
+    <EmbeddedResource Remove="Business\**" />
+    <EmbeddedResource Remove="Repository\**" />
+    <None Remove="Business.Interop\**" />
+    <None Remove="Business.Services\**" />
+    <None Remove="Business\**" />
+    <None Remove="Repository\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.13" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="Business.Interop\Business.Interop.csproj" />
+    <ProjectReference Include="Business.Services\Business.Services.csproj" />
+    <ProjectReference Include="Business\Business.csproj" />
+    <ProjectReference Include="Repository\Repository.csproj" />
+  </ItemGroup>
+
+</Project>

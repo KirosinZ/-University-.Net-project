@@ -1,0 +1,52 @@
+﻿@model BookTakeViewModel
+
+@{
+    ViewBag.Title = "Получение книги";
+}
+
+<h3>Получение книги — @Model.Copy.Book.Title</h3>
+<hr />
+
+<table style="width: 33%">
+    <tr>
+        <th>
+            Ваш баланс
+        </th>
+        <td class="text-center">
+            @Model.Reader.Balance₽
+        </td>
+    </tr>
+    <tr>
+        <th>
+            Стоимость книги
+        </th>
+        <td class="text-center">
+            @Model.Copy.Book.Price₽/день
+        </td>
+    </tr>
+</table>
+
+<div class="row">
+    <div class="col-md-12" style="margin-top: 12px">
+        <form asp-action="Take">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <input type="hidden" name="Reader.Id" value="@Model.Reader.Id" />
+            <input type="hidden" name="Copy.Id" value="@Model.Copy.Id" />
+            <input type="hidden" name="Sub.Id" value="@Model.Sub.Id" />
+
+            <div class="form-group">
+                <label asp-for="Period" class="control-label">Период</label>
+                <input type="number" name="Period" value="1" min="1" max="@Model.MaxPeriod" class="form-control" style="width:33%" />
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Получить" class="btn btn-outline-dark" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-controller="BookCopies" asp-action="Browse" asp-route-id="@Model.Reader.Id" style="margin-top: 6px" class="btn btn-outline-dark">Назад</a>
+</div>

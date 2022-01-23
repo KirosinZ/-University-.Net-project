@@ -1,0 +1,120 @@
+﻿@model ReaderViewModel
+
+@{
+    ViewBag.Title = "Профиль";
+}
+
+<h2>Профиль</h2>
+<table class="table table-bordered">
+    <tr>
+        <th colspan="2" style="font-size: 24px">
+            @Model.Reader.FullName
+        </th>
+        @if (Model.Reader.Balance < 0)
+        {
+            <th style="color: darkred">Баланс: @Model.Reader.Balance₽</th>
+        }
+        else
+        {
+            <th>Баланс: @Model.Reader.Balance₽</th>
+        }
+    </tr>
+    <tr>
+        <td style="width: 33%">
+            <a asp-action="Edit" asp-route-id="@Model.Reader.Id">Редактировать</a>
+        </td>
+        <td style="width: 33%">
+            <a asp-action="Delete" asp-route-id="@Model.Reader.Id">Удалить</a>
+        </td>
+        <td>
+            <a asp-action="Deposit" asp-route-id="@Model.Reader.Id">Пополнить</a>
+        </td>
+    </tr>
+</table>
+
+<h2 style="margin-top: 100px">Абонементы</h2>
+
+<table class="table">
+    <tr>
+        <th>Тип литературы</th>
+        <th colspan="2">Статус</th>
+    </tr>
+
+    @foreach (var s in Model.SubData)
+    {
+        <tr>
+            <td>@s.Type.Name</td>
+            @if (s.Sub != null)
+            {
+                <td>Истекает @s.Sub.End.ToShortDateString()</td>
+                <td>
+                    <a asp-controller="Subscriptions" asp-action="Extend" asp-route-id="@s.Sub.Id">Продлить</a>
+                </td>
+            }
+            else
+            {
+                <td>Не оформлен</td>
+                <td>
+                    <a asp-controller="Subscriptions" asp-action="Issue" asp-route-readerId="@Model.Reader.Id" asp-route-literatureTypeId="@s.Type.Id">Оформить</a>
+                </td>
+            }
+        </tr>
+    }
+</table>
+
+<hr />
+<h2 style="margin-top: 100px">Книги</h2>
+@if(!Model.BookData.Any())
+{
+    <hr/>
+    <h4 class="text-center">У вас нет книг</h4>
+}
+else
+{
+<table class="table">
+    <tr>
+        <th>Название</th>
+        <th>Язык</th>
+        <th>Тип лит-ры</th>
+        <th>Статус</th>
+        <th colspan="3">Штраф</th>
+    </tr>
+
+    @foreach (var o in Model.BookData)
+    {
+<tr>
+    <td>@o.Book.Book.Title</td>
+    <td>@o.Book.Language.Name</td>
+    <td>@o.Book.Book.Genre.Type.Name</td>
+    @if (o.PromisedReturnDate > DateTime.Today)
+    {
+        <td>Вернуть до: @o.PromisedReturnDate.ToShortDateString()</td>
+        <td class="text-center" style="width:8%">—</td>
+        <td style="width:8%">
+            <a asp-controller="Ownerships" asp-action="Extend" asp-route-id="@o.Id">Продлить</a>
+        </td>
+        <td style="width:8%">
+            <a asp-controller="Ownerships" asp-action="Return" asp-route-id="@o.Id">Вернуть</a>
+        </td>
+    }
+    else
+    {
+        <td>Просрочено (дни): @((DateTime.Today - o.PromisedReturnDate).Days)</td>
+        <td>@((DateTime.Today - o.PromisedReturnDate).Days * o.Book.Book.Price)₽</td>
+        <td colspan="2">
+            <a asp-controller="Ownerships" asp-action="Return" asp-route-Id="@o.Id">Вернуть</a>
+        </td>
+    }
+</tr>
+
+    }
+</table>
+}
+<hr/>
+<div class="text-center">
+    <a asp-controller="BookCopies" asp-action="Browse" asp-route-readerId="@Model.Reader.Id" class="btn btn-outline-dark">Взять</a>
+</div>
+
+<div>
+    <a asp-controller="Home" asp-action="Index" class="btn btn-outline-dark" style="margin-top: 25px">Назад</a>
+</div>

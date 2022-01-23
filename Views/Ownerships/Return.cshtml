@@ -1,0 +1,24 @@
+﻿@model BookReturnViewModel
+
+@{
+    ViewBag.Title = "Возврат книги";
+}
+
+<h3>Спасибо за возврат книги в библиотеку!</h3>
+<hr />
+<h3>
+    Вы вернули книгу "@Model.Book.Title" в библиотеку.
+</h3>
+
+@if (Model.Delay > 0)
+{
+    <br />
+    <h3>Так как она была просрочена на @Model.Delay дней, с вашего счета сняты @Model.Fee рублей.</h3>
+}
+@if (Model.Delay > 0 && Model.Reader.Balance < 0)
+{
+    <br />
+    <h3>У вас недостаточно средств, поэтому теперь у вас задолженность в размере @(-Model.Reader.Balance) рублей.</h3>
+}
+
+<a asp-controller="Profile" asp-action="Index" asp-route-id="@Model.Reader.Id" class="btn btn-outline-dark">ОК</a>

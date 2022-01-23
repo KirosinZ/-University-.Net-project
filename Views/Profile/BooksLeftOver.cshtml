@@ -1,0 +1,10 @@
+﻿@model IEnumerable<OwnershipDto>
+
+@{
+    ViewBag.Title = "Несданные книги";
+}
+
+<h3>У вас есть несданные книги.</h3>
+<h3>Сдайте все книги и повторите попытку</h3>
+<hr />
+<a asp-controller="Profile" asp-action="Index" asp-route-id="@Model.First().Subscription.OwnerId" class="btn btn-outline-dark">ОК</a>
